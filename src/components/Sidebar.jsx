@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { useActiveSection } from '../hooks/useActiveSection.jsx';
 
 const items = [
@@ -10,7 +11,7 @@ const items = [
   { id: 'contact', title: 'Contact - Get in touch', icon: ContactIcon },
 ];
 
-export default function Sidebar({ logo, onToggleTheme }) {
+export default function Sidebar({ logo }) {
   const { activeSection } = useActiveSection();
 
   return (
@@ -22,11 +23,21 @@ export default function Sidebar({ logo, onToggleTheme }) {
       </div>
       <nav className="flex flex-col items-center space-y-4" id="desktop-nav">
         {items.map(({ id, title, icon: Icon }) => (
-          <a key={id} href={`#${id}`} className={`nav-icon ${activeSection === id ? 'active' : ''}`} title={title} data-section={id}>
+          <motion.a
+            key={id}
+            href={`#${id}`}
+            className={`nav-icon ${activeSection === id ? 'active' : ''}`}
+            title={title}
+            data-section={id}
+            whileHover={{ y: -1 }}
+            whileTap={{ scale: 0.96 }}
+          >
             <Icon />
-          </a>
+          </motion.a>
         ))}
       </nav>
+
+      <div className="mt-auto" />
     </aside>
   );
 }
@@ -75,22 +86,6 @@ function ContactIcon() {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-    </svg>
-  );
-}
-
-function MoonIcon() {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" className="theme-toggle-icon moon absolute h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-    </svg>
-  );
-}
-
-function SunIcon() {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" className="theme-toggle-icon sun absolute h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
     </svg>
   );
 }

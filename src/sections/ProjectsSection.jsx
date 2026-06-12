@@ -1,32 +1,54 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import SectionHeading from '../components/SectionHeading';
-import { Markup } from '../components/Markup';
 import { useSectionReveal } from '../hooks/useActiveSection.jsx';
+import { staggerSlow, itemScale, itemUp } from '../components/motion';
 
 export default function ProjectsSection({ data }) {
   const sectionRef = useSectionReveal('projects');
 
   return (
-    <section ref={sectionRef} id="projects" className="bg-zinc-950 px-6 py-24 lg:px-16">
+    <motion.section
+      ref={sectionRef}
+      id="projects"
+      className="bg-zinc-950 px-6 py-24 lg:px-16"
+      variants={staggerSlow}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, amount: 0.15 }}
+    >
       <div className="mx-auto max-w-6xl">
-        <SectionHeading>Projects</SectionHeading>
-        <div className="fade-in mt-12 grid gap-8 md:grid-cols-2" style={{ animationDelay: '0.3s' }}>
+        <motion.div variants={itemUp}>
+          <SectionHeading>Projects</SectionHeading>
+        </motion.div>
+        <motion.div className="mt-12 grid gap-8 md:grid-cols-2" variants={staggerSlow}>
           {data.map((project) => (
-            <article key={project.id} className="group overflow-hidden rounded-sm border border-zinc-800 bg-black hover-card">
+            <motion.article
+              key={project.id}
+              className="group overflow-hidden rounded-sm border border-zinc-800 bg-black hover-card"
+              variants={itemScale}
+              whileHover={{ y: -6, transition: { duration: 0.24 } }}
+            >
               <div className="relative aspect-video overflow-hidden bg-zinc-800">
-                  {project.image ? (
-                      <img
-                        src={project.image}
-                        alt={project.title}
-                        loading="lazy"
-                        className="h-full w-full object-cover"
-                      />
-                    ) : (
-                      <div className="flex h-full w-full items-center justify-center">
-                        <ProjectPlaceholder />
-                      </div>
-                    )}
-                <div className="absolute inset-0 hidden items-center justify-center transition-all group-hover:flex" style={{ transitionDelay: '0.3s' }}>
+                {project.image ? (
+                  <motion.img
+                    src={project.image}
+                    alt={project.title}
+                    loading="lazy"
+                    className="h-full w-full object-cover"
+                    whileHover={{ scale: 1.04 }}
+                    transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                  />
+                ) : (
+                  <div className="flex h-full w-full items-center justify-center">
+                    <ProjectPlaceholder />
+                  </div>
+                )}
+                <motion.div
+                  className="absolute inset-0 hidden items-center justify-center transition-all group-hover:flex"
+                  style={{ transitionDelay: '0.3s' }}
+                  initial={false}
+                >
                   <div
                     className="absolute inset-0 z-0 bg-black/70 opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-100"
                     style={{ transitionDelay: '0.3s' }}
@@ -37,13 +59,13 @@ export default function ProjectsSection({ data }) {
                         See Demo
                       </a>
                     ) : null}
-                    <a href={project.sourceUrl} target="_blank" rel="noreferrer" className="rounded-sm border border-white bg-transparent px-4 py-2 text-sm font-medium text-gray-100">
-                      View
-                    </a>
-                  </div>
-                </div>
+                      <a href={project.sourceUrl} target="_blank" rel="noreferrer" className="rounded-sm border border-white bg-transparent px-4 py-2 text-sm font-medium text-gray-100">
+                        View
+                      </a>
+                    </div>
+                </motion.div>
               </div>
-              <div className="p-6">
+              <motion.div className="p-6" variants={itemUp}>
                 <h3 className="mb-2 font-mono text-xl font-bold">{project.title}</h3>
                 <p className="mb-4 text-gray-400">{project.description}</p>
                 <div className="mb-4 flex flex-wrap gap-2">
@@ -53,12 +75,12 @@ export default function ProjectsSection({ data }) {
                     </span>
                   ))}
                 </div>
-              </div>
-            </article>
+              </motion.div>
+            </motion.article>
           ))}
-        </div>
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 }
 

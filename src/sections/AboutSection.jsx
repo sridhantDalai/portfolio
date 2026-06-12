@@ -1,32 +1,51 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import SectionHeading from '../components/SectionHeading';
 import { useSectionReveal } from '../hooks/useActiveSection.jsx';
+import { fadeScale, staggerSlow, itemUp } from '../components/motion';
 
 export default function AboutSection({ data }) {
   const sectionRef = useSectionReveal('about');
 
   return (
-    <section ref={sectionRef} id="about" className="bg-black px-6 py-24 lg:px-16">
+    <motion.section
+      ref={sectionRef}
+      id="about"
+      className="bg-black px-6 py-24 lg:px-16"
+      variants={staggerSlow}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, amount: 0.2 }}
+    >
       <div className="mx-auto max-w-6xl">
-        <SectionHeading>About Me</SectionHeading>
+        <motion.div variants={itemUp}>
+          <SectionHeading>About Me</SectionHeading>
+        </motion.div>
         <div className="mt-12 grid gap-8 md:grid-cols-10 md:gap-12">
           <div className="md:col-span-2">
-            <div className="profile-image-container aspect-square w-full max-w-md overflow-hidden rounded-full border border-zinc-700">
+            <motion.div className="profile-image-container aspect-square w-full max-w-md overflow-hidden rounded-full border border-zinc-700" variants={fadeScale}>
               <div className="flex h-full w-full items-center justify-center">
                 {data.avatar ? (
-                  <img src={data.avatar} alt="Mohin Uddin" className="h-full w-full object-cover" loading="lazy" />
+                  <motion.img
+                    src={data.avatar}
+                    alt="Mohin Uddin"
+                    className="h-full w-full object-cover"
+                    loading="lazy"
+                    whileHover={{ scale: 1.04 }}
+                    transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                  />
                 ) : (
                   <UserPlaceholder />
                 )}
               </div>
-            </div>
+            </motion.div>
           </div>
-          <div className="fade-in md:col-span-7 space-y-6" style={{ animationDelay: '0.3s' }}>
-            <p className="text-base leading-relaxed text-gray-300 md:text-lg" dangerouslySetInnerHTML={{ __html: data.text }} />
-          </div>
+          <motion.div className="md:col-span-7 space-y-6" variants={staggerSlow}>
+            <motion.p className="text-base leading-relaxed text-gray-300 md:text-lg" variants={itemUp} dangerouslySetInnerHTML={{ __html: data.text }} />
+          </motion.div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }
 

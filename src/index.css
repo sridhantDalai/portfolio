@@ -367,6 +367,10 @@ p {
   background-color: #3f3f46;
 }
 
+.timeline-container:before {
+  content: none;
+}
+
 .light-mode .timeline-container:before {
   background-color: #d1d5db;
 }

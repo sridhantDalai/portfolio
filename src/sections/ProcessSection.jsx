@@ -1,68 +1,69 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { motion } from 'framer-motion';
 import SectionHeading from '../components/SectionHeading';
 import { useSectionReveal } from '../hooks/useActiveSection.jsx';
+import { staggerSlow, itemUp, lineReveal, fadeScale } from '../components/motion';
 
 export default function ProcessSection({ data }) {
   const sectionRef = useSectionReveal('process');
 
   return (
-    <section ref={sectionRef} id="process" className="bg-zinc-950 px-6 py-24 lg:px-16">
+    <motion.section
+      ref={sectionRef}
+      id="process"
+      className="bg-zinc-950 px-6 py-24 lg:px-16"
+      variants={staggerSlow}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, amount: 0.18 }}
+    >
       <div className="mx-auto max-w-6xl">
-        <SectionHeading>My Process</SectionHeading>
+        <motion.div variants={itemUp}>
+          <SectionHeading>My Process</SectionHeading>
+        </motion.div>
         <p className="mt-6 mb-12 max-w-2xl text-gray-400">{data.description}</p>
 
         <div className="grid gap-12 md:grid-cols-12">
           <div className="mb-8 md:col-span-5 md:mb-0">
             <div className="sticky top-32 hidden md:block">
-              <div className="aspect-video w-full overflow-hidden rounded-sm border border-zinc-800 bg-black">
-                <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-zinc-900 to-black">
+              <motion.div className="aspect-video w-full overflow-hidden rounded-sm border border-zinc-800 bg-black" variants={fadeScale}>
+                <motion.div
+                  className="flex h-full w-full items-center justify-center bg-gradient-to-br from-zinc-900 to-black"
+                  animate={{ y: [0, -4, 0] }}
+                  transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+                >
                   <ProcessPlaceholder />
-                </div>
-              </div>
+                </motion.div>
+              </motion.div>
             </div>
           </div>
 
           <div className="md:col-span-7">
-            <div className="timeline-container">
+            <motion.div className="timeline-container" variants={staggerSlow}>
+              <motion.div className="absolute left-2 top-0 bottom-0 w-px origin-top bg-zinc-700" variants={lineReveal} style={{ transformOrigin: 'top center' }} />
               {data.steps.map((step, index) => (
-                <div key={step.id} className="timeline-item" style={{ ['--item-index']: index + 1 }}>
+                <motion.div key={step.id} className="timeline-item" style={{ ['--item-index']: index + 1 }} variants={itemUp}>
                   <h3 className="mb-3 font-mono text-xl font-bold">{step.title}</h3>
                   <p className="mb-6 ml-6 text-gray-300" dangerouslySetInnerHTML={{ __html: step.description }} />
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }
 
 function ProcessPlaceholder() {
-  const [current, setCurrent] = useState(0);
-
-  const svgs = [
-    <IdeaSvg key="idea" />,
-    <DesignSvg key="design" />,
-    <CodeSvg key="code" />,
-    <RocketSvg key="rocket" />,
-  ];
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % svgs.length);
-    }, 1500);
-
-    return () => clearInterval(interval);
-  }, [svgs.length]);
-
   return (
-    <div
-      key={current}
-      className="flex h-full w-full items-center justify-center animate-[fadeIn_0.6s_ease]"
+    <motion.div
+      className="flex h-full w-full items-center justify-center"
+      animate={{ y: [0, -4, 0], opacity: [0.72, 1, 0.72] }}
+      transition={{ duration: 5.5, repeat: Infinity, ease: 'easeInOut' }}
     >
-      {svgs[current]}
-    </div>
+      <IdeaSvg />
+    </motion.div>
   );
 }
 
