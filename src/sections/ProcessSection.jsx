@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import SectionHeading from '../components/SectionHeading';
 import { useSectionReveal } from '../hooks/useActiveSection.jsx';
 import { staggerSlow, itemUp, lineReveal, fadeScale } from '../components/motion';
+import SectionParticles from '../components/SectionParticles';
 
 export default function ProcessSection({ data }) {
   const sectionRef = useSectionReveal('process');
@@ -11,43 +12,54 @@ export default function ProcessSection({ data }) {
     <motion.section
       ref={sectionRef}
       id="process"
-      className="bg-zinc-950 px-6 py-24 lg:px-16"
+      className="isolate relative overflow-hidden bg-zinc-950 px-6 py-24 lg:px-16"
       variants={staggerSlow}
       initial="hidden"
       whileInView="show"
       viewport={{ once: true, amount: 0.18 }}
     >
-      <div className="mx-auto max-w-6xl">
-        <motion.div variants={itemUp}>
-          <SectionHeading>My Process</SectionHeading>
-        </motion.div>
-        <p className="mt-6 mb-12 max-w-2xl text-gray-400">{data.description}</p>
+      <div className="pointer-events-none absolute inset-0 z-0">
+        <SectionParticles
+          id="process-particles"
+          count={84}
+          tabletCount={64}
+          mobileCount={40}
+          overlayClassName="bg-black/45"
+        />
+      </div>
+      <div className="relative z-10 mx-auto max-w-6xl">
+        <div className="relative">
+          <motion.div variants={itemUp}>
+            <SectionHeading>My Process</SectionHeading>
+          </motion.div>
+          <p className="mt-6 mb-12 max-w-2xl text-gray-400">{data.description}</p>
 
-        <div className="grid gap-12 md:grid-cols-12">
-          <div className="mb-8 md:col-span-5 md:mb-0">
-            <div className="sticky top-32 hidden md:block">
-              <motion.div className="aspect-video w-full overflow-hidden rounded-sm border border-zinc-800 bg-black" variants={fadeScale}>
-                <motion.div
-                  className="flex h-full w-full items-center justify-center bg-gradient-to-br from-zinc-900 to-black"
-                  animate={{ y: [0, -4, 0] }}
-                  transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-                >
-                  <ProcessPlaceholder />
+          <div className="grid gap-12 md:grid-cols-12">
+            <div className="mb-8 md:col-span-5 md:mb-0">
+              <div className="sticky top-32 hidden md:block">
+                <motion.div className="aspect-video w-full overflow-hidden rounded-sm border border-zinc-800 bg-black" variants={fadeScale}>
+                  <motion.div
+                    className="flex h-full w-full items-center justify-center bg-gradient-to-br from-zinc-900 to-black"
+                    animate={{ y: [0, -4, 0] }}
+                    transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+                  >
+                    <ProcessPlaceholder />
+                  </motion.div>
                 </motion.div>
+              </div>
+            </div>
+
+            <div className="md:col-span-7">
+              <motion.div className="timeline-container" variants={staggerSlow}>
+                <motion.div className="absolute left-2 top-0 bottom-0 w-px origin-top bg-zinc-700" variants={lineReveal} style={{ transformOrigin: 'top center' }} />
+                {data.steps.map((step, index) => (
+                  <motion.div key={step.id} className="timeline-item" style={{ ['--item-index']: index + 1 }} variants={itemUp}>
+                    <h3 className="mb-3 font-mono text-xl font-bold">{step.title}</h3>
+                    <p className="mb-6 ml-6 text-gray-300" dangerouslySetInnerHTML={{ __html: step.description }} />
+                  </motion.div>
+                ))}
               </motion.div>
             </div>
-          </div>
-
-          <div className="md:col-span-7">
-            <motion.div className="timeline-container" variants={staggerSlow}>
-              <motion.div className="absolute left-2 top-0 bottom-0 w-px origin-top bg-zinc-700" variants={lineReveal} style={{ transformOrigin: 'top center' }} />
-              {data.steps.map((step, index) => (
-                <motion.div key={step.id} className="timeline-item" style={{ ['--item-index']: index + 1 }} variants={itemUp}>
-                  <h3 className="mb-3 font-mono text-xl font-bold">{step.title}</h3>
-                  <p className="mb-6 ml-6 text-gray-300" dangerouslySetInnerHTML={{ __html: step.description }} />
-                </motion.div>
-              ))}
-            </motion.div>
           </div>
         </div>
       </div>

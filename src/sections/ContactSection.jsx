@@ -61,7 +61,7 @@ export default function ContactSection({ data }) {
                 <div className="flex space-x-4">
                   {data.socialLinks.map((link) => (
                     <motion.a
-                      key={link.id}
+                      key={`${link.id}-${link.link}`}
                       href={link.link}
                       aria-label={link.title}
                       className="social-icon"

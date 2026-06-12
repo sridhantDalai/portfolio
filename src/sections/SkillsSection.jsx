@@ -29,7 +29,7 @@ export default function SkillsSection({ data }) {
                 <h3 className="font-mono">{group.title || 'Untitled'}</h3>
                 <ul className="skill-list">
                   {group.skills.map((skill) => (
-                    <motion.li key={skill.id} variants={itemUp}>
+                    <motion.li key={`${group.id}-${skill.id}-${skill.title}`} variants={itemUp}>
                       <div className="skill-icon-placeholder">
                         <Markup html={skill.icon} />
                       </div>
