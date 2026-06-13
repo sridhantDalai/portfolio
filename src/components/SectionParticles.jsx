@@ -8,9 +8,9 @@ const initParticles = async (engine) => {
 
 export default function SectionParticles({
   id = 'section-particles',
-  count = 96,
-  mobileCount = 48,
-  tabletCount = 78,
+  count = 200,
+  mobileCount = 170,
+  tabletCount = 170,
   overlayClassName = 'bg-black/35',
 }) {
   const options = useMemo(
@@ -41,13 +41,13 @@ export default function SectionParticles({
       },
       particles: {
         color: {
-          value: '#6b7280',
+          value: '#ffffff',
         },
         links: {
-          color: '#9ca3af',
+          color: '#c3c3c3',
           distance: 160,
           enable: true,
-          opacity: 0.35,
+          opacity: 0.4,
           width: 1,
         },
         collisions: {
@@ -60,7 +60,7 @@ export default function SectionParticles({
             default: 'out',
           },
           random: false,
-          speed: 0.7,
+          speed: 0.9,
           straight: false,
         },
         number: {
