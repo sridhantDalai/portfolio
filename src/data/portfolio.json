@@ -93,6 +93,20 @@
         "Frontend Development"
       ]
     }
+    {
+      "id": 6,
+      "title": "Replate",
+      "description": "A food sharing platform that connects individuals with excess food to those in need. Users can post available food items, browse listings, and coordinate pickups to reduce food waste and support local communities.",
+      "image": "https://res.cloudinary.com/dbjtjvfxd/image/upload/v1781354762/8701470c-fd24-489e-a3e5-bbb2ee810e57.png",
+      "demoUrl": "https://re-plate-nu.vercel.app/",
+      "sourceUrl": "https://github.com/sridhantDalai/Replate",
+      "skills": [
+        "React",
+        "Tailwind CSS",
+        "UI/UX Design",
+        "Frontend Development"
+      ]
+    }    
   ],
   "skillGroups": [
         {
