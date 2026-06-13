@@ -8,7 +8,7 @@ import Loader from './components/Loader';
 const HeroSection = lazy(() => import('./sections/HeroSection'));
 const AboutSection = lazy(() => import('./sections/AboutSection'));
 const ProjectsSection = lazy(() => import('./sections/ProjectsSection'));
-const SkillsSection = lazy(() => import('./sections/SkillsSection'));
+const SkillsSection = lazy(() => import('./sections/SkillsMatterSection'));
 const ProcessSection = lazy(() => import('./sections/ProcessSection'));
 const ContactSection = lazy(() => import('./sections/ContactSection'));
 const Footer = lazy(() => import('./sections/Footer'));

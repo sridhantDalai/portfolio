@@ -35,21 +35,9 @@ export default function ProcessSection({ data }) {
           <p className="mt-6 mb-12 max-w-2xl text-gray-400">{data.description}</p>
 
           <div className="grid gap-12 md:grid-cols-12">
-            <div className="mb-8 md:col-span-5 md:mb-0">
-              <div className="sticky top-32 hidden md:block">
-                <motion.div className="aspect-video w-full overflow-hidden rounded-sm border border-zinc-800 bg-black" variants={fadeScale}>
-                  <motion.div
-                    className="flex h-full w-full items-center justify-center bg-gradient-to-br from-zinc-900 to-black"
-                    animate={{ y: [0, -4, 0] }}
-                    transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-                  >
-                    <ProcessPlaceholder />
-                  </motion.div>
-                </motion.div>
-              </div>
-            </div>
 
-            <div className="md:col-span-7">
+
+            <div className="md:col-span-12">
               <motion.div className="timeline-container" variants={staggerSlow}>
                 <motion.div className="absolute left-2 top-0 bottom-0 w-px origin-top bg-zinc-700" variants={lineReveal} style={{ transformOrigin: 'top center' }} />
                 {data.steps.map((step, index) => (
