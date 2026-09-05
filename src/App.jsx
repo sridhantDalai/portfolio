@@ -16,16 +16,11 @@ const Footer = lazy(() => import('./sections/Footer'));
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    const timer = window.setTimeout(() => setIsLoading(false), 2000);
-    return () => window.clearTimeout(timer);
-  }, []);
-
   return (
     <ActiveSectionProvider>
       <div className="relative min-h-screen bg-black text-white">
         <AnimatePresence>
-          {isLoading ? <Loader initials={portfolio.metadata.logoCharacter} name={portfolio.metadata.title} /> : null}
+          {isLoading ? <Loader onComplete={() => setIsLoading(false)} /> : null}
         </AnimatePresence>
         <motion.div
           className="min-h-screen bg-black text-white"
